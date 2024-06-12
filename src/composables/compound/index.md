@@ -2,7 +2,7 @@
 
 Provides functionality to calculate compound interest.
 
-## Interface
+## Usage
 
 ```typescript
 import { useCompound } from './composables';
@@ -13,6 +13,7 @@ const {
   annualContribution,
   years,
   finalValue,
+  finalValueUSD,
   yearlyValueTable,
 } = useCompound();
 ```
@@ -22,7 +23,7 @@ const {
 Optional configuration object that can be passed to the `useCompound` function.
 
 ```typescript
-type UseCompoundConfig = Partial<{
+type CompoundConfig = Partial<{
   initialValue: number;
   compoundRate: number;
   annualContribution: number;
@@ -32,15 +33,16 @@ type UseCompoundConfig = Partial<{
 
 ### Return Value
 
-The `useCompound` function returns an object with the following properties:
+Returns an object with the following properties:
 
 ```typescript
-interface UseCompound {
+interface Compound {
   initialValue: Ref<number>;
   compoundRate: Ref<number>;
   annualContribution: Ref<number>;
   years: Ref<number>;
   finalValue: ComputedRef<number>;
+  finalValueUSD: ComputedRef<string>;
   yearlyValueTable: ComputedRef<{ year: number; value: number }[]>;
 }
 ```
@@ -55,6 +57,7 @@ interface UseCompound {
 ## Calculated Properties
 
 - `finalValue`: The final value of the investment.
+- `finalValueUSD`: The final value of the investment formatted as a USD currency string.
 - `yearlyValueTable`: A table of the investment's value for each year.
 
 ## Example
@@ -69,7 +72,7 @@ interface UseCompound {
   <input type="number" name="years" v-model="years" />
   <div>
     <span class="text-sm mb-2">Final Value</span>
-    <span class="text-xl text-primary">{{ finalValue }}</span>
+    <span class="text-xl text-primary">{{ finalValueUSD }}</span>
   </div>
   <div v-for="yearlyValue in yearlyValueTable" :key="yearlyValue.year">
     <span>{{ yearlyValue.year }}</span>
@@ -82,12 +85,7 @@ interface UseCompound {
 
 ```typescript
 <script setup lang="ts">
-import FloatLabel from "primevue/floatlabel";
-import FlexBox from "../flex-box/FlexBox.vue";
-import InputNumber from "primevue/inputnumber";
-import DataTable from "primevue/datatable";
-import Column from "primevue/column";
-import { useCompound } from "../../composables/compound
+import { useCompound } from "../../composables/compound";
 
 const {
   initialValue,
@@ -95,7 +93,7 @@ const {
   annualContribution,
   years,
   yearlyValueTable,
-  finalValue,
+  finalValueUSD,
 } = useCompound();
 </script>
 ```

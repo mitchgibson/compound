@@ -1,41 +1,41 @@
 import { computed, ComputedRef, Ref, ref } from "vue";
 
-export type UseCompoundConfig = Partial<{
+export type CompoundConfig = Partial<{
   initialValue: number;
   compoundRate: number;
   annualContribution: number;
   years: number;
 }>;
 
-export interface UseCompound {
+export interface Compound {
   initialValue: Ref<number>;
   compoundRate: Ref<number>;
   annualContribution: Ref<number>;
   years: Ref<number>;
-  finalValue: ComputedRef<string>;
+  finalValue: ComputedRef<number>;
+  finalValueUSD: ComputedRef<string>;
   yearlyValueTable: ComputedRef<{ year: number; value: string }[]>;
 }
 
-/**
- * useCompound
- * @param {UseCompoundConfig} config
- * @returns 
- */
-export function useCompound(config: UseCompoundConfig = {}): UseCompound {
+export function useCompound(config: CompoundConfig = {}): Compound {
 
   const initialValue = ref<number>(config.initialValue || 10000);
   const compoundRate = ref<number>(config.compoundRate || 7);
   const annualContribution = ref<number>(config.annualContribution || 0);
   const years = ref<number>(config.years || 10);
 
+  const finalValueUSD = computed(() => {
+    return finalValue.value.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  });
+
   const finalValue = computed(() => {
     return (
       initialValue.value * (1 + compoundRate.value / 100) ** years.value +
       annualContribution.value * (((1 + compoundRate.value / 100) ** years.value - 1) / (compoundRate.value / 100))
-    ).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
+    );
   });
   
   const yearlyValueTable = computed(() => {
@@ -62,6 +62,7 @@ export function useCompound(config: UseCompoundConfig = {}): UseCompound {
     compoundRate,
     annualContribution,
     years,
+    finalValueUSD,
     finalValue,
     yearlyValueTable,
   };
