@@ -21,6 +21,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.25.13",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vitepress": "^1.2.3",

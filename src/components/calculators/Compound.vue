@@ -35,39 +35,14 @@ import FlexBox from "../flex-box/FlexBox.vue";
 import InputNumber from "primevue/inputnumber";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import { computed, ref } from "vue";
+import { useCompound } from "../../composables/compound
 
-const initialValue = ref<number>(10000);
-const compoundRate = ref<number>(7);
-const annualContribution = ref<number>(0);
-const years = ref<number>(10);
-
-const finalValue = computed(() => {
-  return (
-    initialValue.value * (1 + compoundRate.value / 100) ** years.value +
-    annualContribution.value * (((1 + compoundRate.value / 100) ** years.value - 1) / (compoundRate.value / 100))
-  ).toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-});
-
-const yearlyValueTable = computed(() => {
-  const table = [];
-  let value = initialValue.value;
-  for (let i = 0; i < years.value; i++) {
-    // Apply the compound interest for the year
-    value = value * (1 + compoundRate.value / 100);
-    // Add the annual contribution at the end of the year
-    value += annualContribution.value;
-    table.push({
-      year: i + 1,
-      value: value.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      }),
-    });
-  }
-  return table;
-});
+const {
+  initialValue,
+  compoundRate,
+  annualContribution,
+  years,
+  yearlyValueTable,
+  finalValue,
+} = useCompound();
 </script>

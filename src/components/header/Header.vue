@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
-import { useThemeStore } from "../../stores/ThemeStore";
+import { useThemeStore } from "../../stores/theme/ThemeStoreeStore";
 import { computed } from "vue";
 import { useBattery } from '@vueuse/core'
 

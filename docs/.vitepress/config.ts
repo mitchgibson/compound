@@ -1,29 +1,28 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from "vitepress";
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Compound",
-  description: "A Vue 3 Test Bed",
+  // Your existing config...
+  srcDir: "../src",
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Composables', link: '/composables' },
+      { text: 'Stores', link: '/stores' }
     ],
-
-
     sidebar: [
       {
-        text: 'Examples',
+        text: "Documentation",
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
+          {
+            text: "Composables",
+            link: "/composables",
+          },
+          {
+            text: "Stores",
+            link: "/stores",
+          },
+        ],
+      },
     ],
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
-  }
-})
+  },
+});
